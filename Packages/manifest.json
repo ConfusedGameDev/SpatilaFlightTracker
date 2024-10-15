@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "com.kvrl.kvrlenginev2": "file:E:/KVRL/KVRLENGINEV2",
+    "com.meta.xr.sdk.interaction.ovr": "69.0.1",
+    "com.unity.2d.sprite": "1.0.0",
     "com.unity.collab-proxy": "2.5.2",
     "com.unity.feature.development": "1.0.2",
     "com.unity.inputsystem": "1.8.1",
@@ -8,6 +9,7 @@
     "com.unity.learn.iet-framework.authoring": "1.2.2",
     "com.unity.nuget.newtonsoft-json": "3.2.1",
     "com.unity.render-pipelines.universal": "17.0.3",
+    "com.unity.splines": "2.6.1",
     "com.unity.test-framework": "1.4.3",
     "com.unity.xr.arfoundation": "6.0.1",
     "com.unity.xr.hands": "1.4.1",
