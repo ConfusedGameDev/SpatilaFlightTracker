@@ -70,3 +70,12 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+Assets/Resources/OculusRuntimeSettings.asset
+Assets/QUI/Foliage-Sphere-Take1.asset
+Assets/Oculus/OculusProjectConfig.asset
+Assets/FImpossible Creations/Plugins - Animating/Legs Animator/Legs Animator - Demos.unitypackage.meta
+Assets/FImpossible Creations/Plugins - Animating/Legs Animator/Just Legs Animator Assembly Definitions.unitypackage.meta
+Assets/FImpossible Creations/All Fimpossible Creations Plugins Assembly Definitions.unitypackage.meta
+Assets/Wwise/API/Runtime/Plugins/Android/arm64-v8a/Profile/libAkSoundEngine.so.meta
+Assets/Wwise/API/Runtime/Plugins/Android/armeabi-v7a/Profile/libAkSoundEngine.so.meta
+Assets/Wwise/API/Runtime/Plugins/Android/x86/Profile/libAkSoundEngine.so.meta
