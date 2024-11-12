@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class FlightTracker : MonoBehaviour
 {
@@ -11,14 +13,15 @@ public class FlightTracker : MonoBehaviour
     public string apiKey = "ZWuYuGOivaxYcipb2QLgqyizt8oRyM7S";
     public TMPro.TMP_InputField flightNumber;
 
-     
+    public TextMeshProUGUI flightNumberContainer, flightOrigin, flightDestination, totalDuration, remainingTime;
+    public Image flightPercentage;
     public GameObject earth;  // Assign the Earth GameObject in Unity
     public GameObject plane;  // Assign the Plane GameObject in Unity
     public float earthRadius = 10f;  // Set the radius of the Earth (or scale)
     [Range(1f,10f)]
     public float verticalOffset = 2f;  // Vertical offset from Earth's surface along the normal
 
-    void getFlightData()
+    public void getFlightData()
     {
         earthRadius = earth.GetComponent<SphereCollider>().radius*verticalOffset;
 
@@ -71,7 +74,7 @@ public class FlightTracker : MonoBehaviour
                             Flight flight2 = JsonUtility.FromJson<Flight>(request.downloadHandler.text);
                             if (flight2.last_position != null)
                             {
-                                infoText.text+=($"Latitude: {flight.last_position.latitude}, Longitude: {flight.last_position.longitude}");
+                                infoText.text+=($"Latitude: {flight2.last_position.latitude}, Longitude: {flight2.last_position.longitude}");
                                 if (flight2 != null)
                                 {
 
@@ -80,30 +83,47 @@ public class FlightTracker : MonoBehaviour
                                     if (!string.IsNullOrEmpty(flight.scheduled_in))
                                     {
                                         DateTime scheduledArrival;
+                                        DateTime scheduledDeparture;
+                                        if (DateTime.TryParse(flight.actual_off, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out scheduledDeparture))
+                                        {
+                                             
+                                        }
                                         if (DateTime.TryParse(flight.scheduled_in, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out scheduledArrival))
                                         {
-                                            TimeSpan timeUntilArrival = scheduledArrival - DateTime.UtcNow;
-                                            infoText.text+=($"Time Until Arrival: {timeUntilArrival}");
+                                            
                                         }
+                                        TimeSpan duration = scheduledArrival - scheduledDeparture;
+                                        TimeSpan timeUntilArrival = scheduledArrival - DateTime.Now;
+                                        var percentage= timeUntilArrival.TotalSeconds/duration.TotalSeconds;
+                                        flightPercentage.fillAmount =(float) percentage;
+                                        totalDuration.text = "Total Duration: "+ duration.ToString();
+                                        remainingTime.text = "Time until Arrival: " + timeUntilArrival.ToString();
+                                        infoText.text += ($"Time Until Arrival: {timeUntilArrival}");
                                     }
 
-                                    if (flight.last_position != null)
+                                    if (flight2.last_position != null)
                                     {
-                                        infoText.text+=($"Current Position - Latitude: {flight.last_position.latitude}, Longitude: {flight.last_position.longitude}");
+                                        infoText.text+=($"Current Position - Latitude: {flight2.last_position.latitude}, Longitude: {flight2.last_position.longitude}");
                                         if (!string.IsNullOrEmpty(flight.gate_origin))
                                         {
-                                            infoText.text+=($"Gate Origin: {flight.gate_origin}, Terminal Origin: {flight.terminal_origin}");
+                                            infoText.text+=($"Gate Origin: {flight2.gate_origin}, Terminal Origin: {flight2.terminal_origin}");
                                         }
-                                        if (!string.IsNullOrEmpty(flight.gate_destination))
+                                        if (!string.IsNullOrEmpty(flight2.gate_destination))
                                         {
-                                            infoText.text+=($"Gate Destination: {flight.gate_destination}, Terminal Destination: {flight.terminal_destination}");
+                                            infoText.text+=($"Gate Destination: {flight2.gate_destination}, Terminal Destination: {flight2.terminal_destination}");
                                         }
 
                                         // Calculate the position on Earth using latitude and longitude
                                         //string earthPosition = GetEarthPosition(flight.last_position.latitude, flight.last_position.longitude);
-                                        infoText.text+=($"Position on Earth:   Lat: {flight.last_position.latitude}  Long: {flight.last_position.longitude}");
+                                        infoText.text+=($"Position on Earth:   Lat: {flight2.last_position.latitude}  Long: {flight2.last_position.longitude}");
                                     }
                                     //SetPlanePositionOnEarth(flight2.last_position.latitude, flight2.last_position.longitude);
+                                }
+                                if(flightNumberContainer && flightOrigin && flightDestination)
+                                {
+                                    flightNumberContainer.text = "Flight # " + flightNumber;
+                                    flightOrigin.text = $"{flight2.origin.name}, {flight2.origin.city}";
+                                    flightDestination.text= $"{flight2.destination.name}, {flight2.destination.city}";
                                 }
                             }
                              
