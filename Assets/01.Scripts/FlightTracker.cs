@@ -21,11 +21,13 @@ public class FlightTracker : MonoBehaviour
     [Range(1f,10f)]
     public float verticalOffset = 2f;  // Vertical offset from Earth's surface along the normal
 
+    public bool debug=true;
+    public string debugFNumber = "ANA215";
     public void getFlightData()
     {
         earthRadius = earth.GetComponent<SphereCollider>().radius*verticalOffset;
 
-        StartCoroutine(GetFlightInfo(flightNumber.text));  // Example flight number: AA100
+        StartCoroutine(GetFlightInfo(debug? debugFNumber: flightNumber.text));  // Example flight number: AA100
     }
     public string data;
     public TMPro.TextMeshProUGUI infoText;
